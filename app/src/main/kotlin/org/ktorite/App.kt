@@ -1,23 +1,37 @@
 package org.ktorite
 
-import com.github.ajalt.clikt.command.SuspendingCliktCommand
-import com.github.ajalt.clikt.command.main
+import com.github.ajalt.clikt.core.CliktCommand
+import com.github.ajalt.clikt.core.Context
+import com.github.ajalt.clikt.core.main
+import com.github.ajalt.clikt.core.subcommands
 import com.github.ajalt.clikt.parameters.arguments.argument
-import com.github.ajalt.clikt.parameters.options.default
-import com.github.ajalt.clikt.parameters.options.option
-import com.github.ajalt.clikt.parameters.types.int
-import kotlinx.coroutines.delay
+import org.ktorite.projectHandler.*
 
-class ktorite : SuspendingCliktCommand() {
-  val count by option(help = "Init").int().default(1)
-  val name by argument()
+class CreateProject : CliktCommand(name = "create-project") {
+  private val projectName by argument()
+  private val projectDirectory by argument()
 
-  override suspend fun run() {
-    for (i in 1..count) {
-      echo("$name!")
-      delay(1000)
-    }
+  override fun help(context: Context): String = "Creates a ktorite project"
+  override val printHelpOnEmptyArgs = true
+  override fun run() {
+    createProject(projectName, projectDirectory)
   }
 }
 
-suspend fun main(args: Array<String>) = ktorite().main(args)
+class CreateApp : CliktCommand(name = "create-app") {
+  private val appName by argument()
+  override fun help(context: Context): String = "Creates a ktorite app"
+  override val printHelpOnEmptyArgs = true
+  override fun run() {
+        createApp(appName)
+  }
+}
+
+class Admin : CliktCommand(name = "ktorite") {
+  override val printHelpOnEmptyArgs = true
+  override fun run() = Unit
+}
+
+fun main(args: Array<String>) {
+  Admin().subcommands(CreateProject(), CreateApp()).main(args)
+}
