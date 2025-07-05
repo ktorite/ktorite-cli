@@ -24,6 +24,8 @@ if [ -n "$ZSH_VERSION" ]; then
   PROFILE="$HOME/.zshrc"
 elif [ -n "$BASH_VERSION" ]; then
   PROFILE="$HOME/.bashrc"
+elif [ -n "$FISH_VERSION" ]; then
+  PROFILE="$HOME/.config/fish/config.fish"
 else
   PROFILE="$HOME/.profile"
 fi
