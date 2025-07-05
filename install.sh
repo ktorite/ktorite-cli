@@ -26,12 +26,19 @@ elif [ -n "$BASH_VERSION" ]; then
   PROFILE="$HOME/.bashrc"
 elif [ -n "$FISH_VERSION" ]; then
   PROFILE="$HOME/.config/fish/config.fish"
+  FISH=true
 else
   PROFILE="$HOME/.profile"
 fi
 
-if ! grep -q 'export PATH="$HOME/.ktorite' "$PROFILE"; then
-  echo 'export PATH="$HOME/.ktorite:$PATH"' >>"$PROFILE"
+if [ -z "$FISH_CONFIGURED" ]; then
+  if ! grep -q 'export PATH="$HOME/.ktorite' "$PROFILE"; then
+    echo 'export PATH="$HOME/.ktorite:$PATH"' >>"$PROFILE"
+  fi
+else
+  if ! grep -q 'set -U fish_user_paths' "$PROFILE"; then
+    echo 'set -U fish_user_paths "$HOME/.ktorite" $fish_user_paths' >>"$PROFILE"
+  fi
 fi
 
 echo "Ktorite CLI installed successfully"
