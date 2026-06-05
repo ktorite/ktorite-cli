@@ -14,6 +14,10 @@ class CreateProject : CliktCommand(name = "create-project") {
   override fun help(context: Context): String = "Creates a ktorite project"
   override val printHelpOnEmptyArgs = true
   override fun run() {
+    if (!projectName.matches(Regex("[a-zA-Z][a-zA-Z0-9]*"))) {
+      println("Error: Project name must be a valid Kotlin identifier (letters and digits only, starting with a letter)")
+      return
+    }
     createProject(projectName, projectDirectory)
   }
 }
@@ -23,7 +27,11 @@ class CreateApp : CliktCommand(name = "create-app") {
   override fun help(context: Context): String = "Creates a ktorite app"
   override val printHelpOnEmptyArgs = true
   override fun run() {
-        createApp(appName)
+    if (!appName.matches(Regex("[a-zA-Z][a-zA-Z0-9]*"))) {
+      println("Error: App name must be a valid Kotlin identifier (letters and digits only, starting with a letter)")
+      return
+    }
+    createApp(appName)
   }
 }
 

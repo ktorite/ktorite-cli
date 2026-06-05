@@ -30,4 +30,5 @@ fun createApp(appName: String) {
     }
 
     println("Ktorite App '$appName' created successfully.")
+    println("Add to Application.kt: registerModels(${projectName}.apps.${appName}.SampleModel)")
 }
