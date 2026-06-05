@@ -27,6 +27,7 @@ tasks.named<Test>("test") {
 
 tasks.register<Jar>("fatJar") {
   group = "build"
+  archiveBaseName.set("ktorite")
   archiveClassifier.set("all")
 
   manifest {
