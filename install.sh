@@ -2,7 +2,7 @@
 
 set -e
 
-VERSION="v0.1.0"
+VERSION="v1.0.0"
 GITHUB_USER="ktorite"
 REPO="ktorite-cli"
 INSTALL_DIR="$HOME/.ktorite"

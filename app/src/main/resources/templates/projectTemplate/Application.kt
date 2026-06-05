@@ -14,6 +14,7 @@ fun main() {
             username = "sa"
             password = ""
         }
+        registerModels(User)
         routing {
             get("/") {
                 call.respondText("Hello from {{projectName}}!")

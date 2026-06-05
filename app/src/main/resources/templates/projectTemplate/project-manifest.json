@@ -1,4 +1,6 @@
 {
   "build.gradle.kts": "build.gradle.kts",
-  "settings.gradle.kts": "settings.gradle.kts"
+  "settings.gradle.kts": "settings.gradle.kts",
+  "Application.kt": "src/main/kotlin/{{projectName}}/Application.kt",
+  "models.kt": "src/main/kotlin/{{projectName}}/models.kt"
 }
