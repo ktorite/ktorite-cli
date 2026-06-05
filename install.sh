@@ -2,11 +2,8 @@
 
 set -e
 
-VERSION="v1.0.0"
-GITHUB_USER="ktorite"
-REPO="ktorite-cli"
 INSTALL_DIR="$HOME/.ktorite"
-JAR_URL="https://github.com/$GITHUB_USER/$REPO/releases/download/$VERSION/ktorite-all.jar"
+JAR_URL="https://github.com/ktorite/ktorite-cli/releases/latest/download/ktorite-all.jar"
 
 echo "Downloading ktorite v$VERSION"
 
