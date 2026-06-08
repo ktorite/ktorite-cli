@@ -3,6 +3,13 @@ package org.ktorite.projectHandler
 import org.ktorite.helpers.loadManifest
 import org.ktorite.helpers.loadTemplate
 import java.io.File
+import java.security.SecureRandom
+
+private val chars = "abcdefghijklmnopqrstuvwxyz0123456789!@#%^&*(-_=+)"
+private val random = SecureRandom()
+
+private fun generateSecret(length: Int = 50): String =
+    (1..length).map { chars[random.nextInt(chars.length)] }.joinToString("")
 
 fun createProject(projectName: String, projectDirectory: String) {
   val targetDir = File(projectDirectory)
@@ -12,10 +19,12 @@ fun createProject(projectName: String, projectDirectory: String) {
   }
   targetDir.mkdirs()
 
+  val secret = generateSecret()
   val manifest = loadManifest("/templates/projectTemplate/project-manifest.json")
   manifest.forEach { (templateFile, targetPath) ->
     val content = loadTemplate("/templates/projectTemplate/$templateFile")
       .replace("{{projectName}}", projectName)
+      .replace("{{secret}}", secret)
     val outputPath = targetPath.replace("{{projectName}}", projectName)
     val outputFile = File(targetDir, outputPath)
     outputFile.parentFile.mkdirs()
