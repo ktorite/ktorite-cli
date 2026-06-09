@@ -2,10 +2,19 @@
 
 set -e
 
-INSTALL_DIR="$HOME/.ktorite"
-JAR_URL="https://github.com/ktorite/ktorite-cli/releases/latest/download/ktorite-all.jar"
+if ! command -v java >/dev/null 2>&1; then
+  echo "Error: Java is required but not found."
+  echo "Install Java 17+ from https://adoptium.net or your package manager."
+  exit 1
+fi
 
-echo "Downloading ktorite v$VERSION"
+if ! command -v curl >/dev/null 2>&1; then
+  echo "Error: curl is required but not found."
+  exit 1
+fi
+
+INSTALL_DIR="$HOME/.ktorite"
+JAR_URL="https://github.com/ktorite/ktorite-cli/releases/download/v1.0.0/ktorite-all.jar"
 
 mkdir -p "$INSTALL_DIR"
 curl -L -o "$INSTALL_DIR/ktorite.jar" "$JAR_URL"
@@ -17,26 +26,37 @@ EOF
 
 chmod +x "$INSTALL_DIR/ktorite"
 
-if [ -n "$ZSH_VERSION" ]; then
-  PROFILE="$HOME/.zshrc"
-elif [ -n "$BASH_VERSION" ]; then
-  PROFILE="$HOME/.bashrc"
-elif [ -n "$FISH_VERSION" ]; then
-  PROFILE="$HOME/.config/fish/config.fish"
-  FISH=true
-else
-  PROFILE="$HOME/.profile"
-fi
+PARENT=$(basename "$(cat /proc/$PPID/comm 2>/dev/null || echo "sh")" 2>/dev/null)
 
-if [ -z "$FISH_CONFIGURED" ]; then
-  if ! grep -q 'export PATH="$HOME/.ktorite' "$PROFILE"; then
-    echo 'export PATH="$HOME/.ktorite:$PATH"' >>"$PROFILE"
-  fi
-else
-  if ! grep -q 'set -U fish_user_paths' "$PROFILE"; then
-    echo 'set -U fish_user_paths "$HOME/.ktorite" $fish_user_paths' >>"$PROFILE"
-  fi
+case "$PARENT" in
+fish)
+  PROFILE="$HOME/.config/fish/config.fish"
+  LINE='fish_add_path "$HOME/.ktorite"'
+  ;;
+zsh)
+  PROFILE="$HOME/.zshrc"
+  LINE='export PATH="$HOME/.ktorite:$PATH"'
+  ;;
+bash)
+  PROFILE="$HOME/.bashrc"
+  LINE='export PATH="$HOME/.ktorite:$PATH"'
+  ;;
+*)
+  PROFILE="$HOME/.profile"
+  LINE='export PATH="$HOME/.ktorite:$PATH"'
+  ;;
+esac
+
+export PATH="$INSTALL_DIR:$PATH"
+
+if ! grep -q "\.ktorite" "$PROFILE" 2>/dev/null; then
+  echo "$LINE" >>"$PROFILE"
 fi
 
 echo "Ktorite CLI installed successfully"
-echo "Run 'ktorite --help' to get started."
+echo ""
+echo "To use it now:"
+echo "  source $PROFILE"
+echo ""
+echo "Or start a new terminal, then:"
+echo "  ktorite --help"
