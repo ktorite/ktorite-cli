@@ -11,7 +11,8 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.ktorite:ktorite:1.0.0")
+    implementation("com.github.ktorite:ktorite-core:1.0.0")
+    implementation("com.github.ktorite:ktorite-admin:1.0.0")
     implementation("ch.qos.logback:logback-classic:1.5.34")
 }
 

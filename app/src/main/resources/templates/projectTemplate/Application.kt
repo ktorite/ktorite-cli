@@ -11,7 +11,7 @@ fun main() {
 
     Ktorite.start {
         port = 8080
-        enableAdmin = true
+        developmentMode = true
         database {
             url = props.getProperty("db.url")
             driver = props.getProperty("db.driver")
