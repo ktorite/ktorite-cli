@@ -14,7 +14,7 @@ if ! command -v curl >/dev/null 2>&1; then
 fi
 
 INSTALL_DIR="$HOME/.ktorite"
-JAR_URL="https://github.com/ktorite/ktorite-cli/releases/download/v1.0.0/ktorite-all.jar"
+JAR_URL="https://github.com/ktorite/ktorite-cli/releases/download/v1.0.1/ktorite-all.jar"
 
 mkdir -p "$INSTALL_DIR"
 curl -L -o "$INSTALL_DIR/ktorite.jar" "$JAR_URL"
