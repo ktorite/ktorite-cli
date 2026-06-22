@@ -3,6 +3,5 @@
   "settings.gradle.kts": "settings.gradle.kts",
   "ktorite.properties": "ktorite.properties",
   "Application.kt": "src/main/kotlin/{{projectName}}/Application.kt",
-  "CreateSuperuser.kt": "src/main/kotlin/{{projectName}}/CreateSuperuser.kt",
   "models.kt": "src/main/kotlin/{{projectName}}/models.kt"
 }

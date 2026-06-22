@@ -23,7 +23,7 @@ application {
 tasks.register("createsuperuser", JavaExec::class) {
     group = "ktorite"
     description = "Create a superuser for the admin panel"
-    mainClass.set("{{projectName}}.CreateSuperuserKt")
+    mainClass.set("org.ktorite.auth.CreateSuperuserMainKt")
     classpath = sourceSets.main.get().runtimeClasspath
     val argsList = project.findProperty("args")?.toString()?.split(" ")?.filter { it.isNotBlank() }.orEmpty()
     args(argsList)
