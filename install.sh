@@ -26,26 +26,19 @@ EOF
 
 chmod +x "$INSTALL_DIR/ktorite"
 
-PARENT=$(basename "$(cat /proc/$PPID/comm 2>/dev/null || echo "sh")" 2>/dev/null)
-
-case "$PARENT" in
-fish)
+if [ -n "$FISH_VERSION" ]; then
   PROFILE="$HOME/.config/fish/config.fish"
   LINE='fish_add_path "$HOME/.ktorite"'
-  ;;
-zsh)
+elif [ -n "$ZSH_VERSION" ]; then
   PROFILE="$HOME/.zshrc"
   LINE='export PATH="$HOME/.ktorite:$PATH"'
-  ;;
-bash)
+elif [ -n "$BASH_VERSION" ]; then
   PROFILE="$HOME/.bashrc"
   LINE='export PATH="$HOME/.ktorite:$PATH"'
-  ;;
-*)
+else
   PROFILE="$HOME/.profile"
   LINE='export PATH="$HOME/.ktorite:$PATH"'
-  ;;
-esac
+fi
 
 export PATH="$INSTALL_DIR:$PATH"
 
