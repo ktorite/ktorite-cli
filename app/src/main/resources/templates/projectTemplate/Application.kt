@@ -11,7 +11,7 @@ fun main() {
 
     Ktorite.start {
         port = 8080
-        developmentMode = true
+        developmentMode = System.getenv("KTORITE_DEV") != "false"
         database {
             url = props.getProperty("db.url")
             driver = props.getProperty("db.driver")

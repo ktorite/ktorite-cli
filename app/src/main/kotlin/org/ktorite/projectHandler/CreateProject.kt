@@ -5,7 +5,7 @@ import org.ktorite.helpers.loadTemplate
 import java.io.File
 import java.security.SecureRandom
 
-private val chars = "abcdefghijklmnopqrstuvwxyz0123456789!@#%^&*(-_=+)"
+private const val chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#%^&*(-_=+)"
 private val random = SecureRandom()
 
 private fun generateSecret(length: Int = 50): String =
@@ -17,10 +17,14 @@ fun createProject(projectName: String, projectDirectory: String) {
     println("Project '$projectName' already exists at $projectDirectory!")
     return
   }
-  targetDir.mkdirs()
 
   val secret = generateSecret()
   val manifest = loadManifest("/templates/projectTemplate/project-manifest.json")
+  if (manifest.isEmpty()) {
+    println("Error: Project manifest is empty or missing")
+    return
+  }
+  targetDir.mkdirs()
   manifest.forEach { (templateFile, targetPath) ->
     val content = loadTemplate("/templates/projectTemplate/$templateFile")
       .replace("{{projectName}}", projectName)
