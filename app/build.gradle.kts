@@ -31,7 +31,7 @@ tasks.register<Jar>("fatJar") {
   archiveClassifier.set("all")
 
   manifest {
-    attributes["Main-Class"] = "org.ktorite.AppKt" // <-- change this to your actual package + main file
+    attributes["Main-Class"] = "org.ktorite.AppKt"
   }
 
   from(sourceSets.main.get().output)
