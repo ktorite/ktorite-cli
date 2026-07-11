@@ -3,6 +3,7 @@ package {{projectName}}
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.ktorite.Ktorite
+import org.ktorite.rest.restFramework
 import java.util.Properties
 import java.io.File
 
@@ -28,6 +29,9 @@ fun main() {
             get("/") {
                 call.respondText("Hello from {{projectName}}!")
             }
+        }
+        restFramework {
+            registerAll()
         }
     }
 }

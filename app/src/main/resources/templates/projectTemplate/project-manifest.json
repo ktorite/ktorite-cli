@@ -1,4 +1,5 @@
 {
+  "gitignore": ".gitignore",
   "build.gradle.kts": "build.gradle.kts",
   "settings.gradle.kts": "settings.gradle.kts",
   "ktorite.properties": "ktorite.properties",
